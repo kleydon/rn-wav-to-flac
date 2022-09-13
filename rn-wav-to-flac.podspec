@@ -14,8 +14,24 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "10.0" }
   s.source       = { :git => "https://github.com/kleydon/rn-wav-to-flac.git", :tag => "#{s.version}" }
 
-  s.source_files = "ios/**/*.{h,m,mm}", "cpp/**/*.{h,cpp}"
+  # Modified section
+  # ++++++++++++++++
+  # Modified to admit 'c' and 'hpp' files
+  s.source_files = "ios/**/*.{h,m,mm}", "cpp/**/*.{h,c,hpp,cpp}"
 
+  # Added to specify header search paths for BUILDING the pod
+  # Idea from here: https://github.com/CocoaPods/CocoaPods/issues/5375
+  s.pod_target_xcconfig = {
+    'HEADER_SEARCH_PATHS' => '$(inherited) ${PODS_TARGET_SRCROOT}/ios/** ${PODS_TARGET_SRCROOT}/cpp/**'
+  }
+
+  # Added to expose a heirarchical header structure for the USERS of this pod.
+  # Other methods, e.g. s.private_header_files, s.public_header_files etc, 
+  # flatten the heirarchy, resulting in naming collisions and confusion.
+  s.header_mappings_dir = 'cpp/include'
+  # ----------------
+
+  
   s.dependency "React-Core"
 
   # Don't install the dependencies when we run `pod install` in the old architecture.

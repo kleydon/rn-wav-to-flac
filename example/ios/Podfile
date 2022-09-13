@@ -6,6 +6,7 @@ install! 'cocoapods', :deterministic_uuids => false
 
 ENV['RCT_NEW_ARCH_ENABLED'] = '0'
 
+
 target 'RnWavToFlacExample' do
   config = use_native_modules!
 
@@ -20,6 +21,11 @@ target 'RnWavToFlacExample' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  # Attempt to "sandbox" this pod, header-wise, from other pods.
+  # NOTE: Doesn't isolate from some other application code (which is why 
+  # we needed to rename flac's "float.h" to "flac_float.h"...)
+  pod 'rn-wav-to-flac', path: '../..', modular_headers: true
 
   # Enables Flipper.
   #

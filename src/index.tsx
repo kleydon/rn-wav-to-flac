@@ -18,3 +18,7 @@ const RnWavToFlac = NativeModules.RnWavToFlac  ? NativeModules.RnWavToFlac  : ne
 export function multiply(a: number, b: number): Promise<number> {
   return RnWavToFlac.multiply(a, b)
 }
+
+export function wavToFlac(inputWavFilePath: string, outputFlacFilePath: string): Promise<number> {
+  return RnWavToFlac.wavToFlac(inputWavFilePath, outputFlacFilePath)
+}
