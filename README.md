@@ -1,11 +1,25 @@
 # rn-wav-to-flac
 Converts wav files to flac files
 
+
+## Compatibility:
+
+React Native >= 0.61
+iOS: >= 11.0
+Android SDK: >= 21
+
+
 ## Installation
 
-```sh
-npm install rn-wav-to-flac
+In your project directory, type:
 ```
+yarn add 'rn-wav-to-flac@https://github.com/kleydon/rn-wav-to-flac'
+```
+[iOS only]:
+```
+npx pod-install
+```
+
 
 ## Usage
 
@@ -145,6 +159,8 @@ In cpp/share/grabbag/cuesheet.c, added the following modification:
 ### 5. Fold libFLAC/libFLAC++ into a React-Native Library
 
 Create the skeleton rn lib via `npx create-react-native-library rn-wav-to-flac`, test on iOS/android.
+
+Change ios bundle identifier to `com.quixotry.rnwavtoflac`
 
 Place libFLAC/libFLAC++ src and includes (and my wavToFlac conversion code) in the "cpp" dir that was created with the RN lib.
 
