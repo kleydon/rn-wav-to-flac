@@ -16,26 +16,26 @@ const resultCode = await wavToFlac(inputWavFilePath, outputFlacFilePath)
 // Result codes listed in cpp/include/ResultCode.h; OK == 0
 ```
 
-## Attribution
-
-**LibFLAC / LibFLAC++:**
-  Copyright (C) 2000-2009  Josh Coalson
-  Copyright (C) 2011-2022  Xiph.Org Foundation
-
-See LICENSE file.
-
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
-## License
 
-No license; C. Krispin Leydon, 2022 - All rights reserved
+## License & Attribution
+
+See LICENSE file.
+
+**rn-wav-to-flac:**
+  Copyright (C) 2022-Present Krispin Leydon, All rights reserved
+
+**libFLAC/libFLAC++:**
+  Copyright (C) 2000-2009  Josh Coalson
+  Copyright (C) 2011-2022  Xiph.Org Foundation
 
 
 ## Development Process
 
-### 1. Get the FLAC distribution
+### 1. Get FLAC distribution
 
 Download flac-1.3.4 source distribution from:
 	https://ftp.osuosl.org/pub/xiph/releases/flac/
@@ -142,7 +142,7 @@ In cpp/share/grabbag/cuesheet.c, added the following modification:
 
 
 
-### 5. Brought libFLAC/libFLAC++ and wavToFlac code into a RN lib
+### 5. Fold libFLAC/libFLAC++ into a React-Native Library
 
 Create the skeleton rn lib via `npx create-react-native-library rn-wav-to-flac`, test on iOS/android.
 
