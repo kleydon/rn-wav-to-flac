@@ -2,7 +2,10 @@ import * as React from 'react'
 import RNFS from 'react-native-fs'
 
 import { StyleSheet, View, Text } from 'react-native'
-import { multiply, wavToFlac } from 'rn-wav-to-flac'
+import { 
+  multiply, 
+  wavToFlac 
+} from 'rn-wav-to-flac'
 
 const ilog = console.log
 
@@ -21,8 +24,7 @@ export default function App() {
   React.useEffect(() => {
     multiply(3, 7).then(setResultA)
     wavToFlac(inWavFilePath, outFlacFilePath).then(setResultB)
-    console.log('A')
-    console.log(multiply(3, 7))
+    ilog('A')
   }, []);
 
   return (

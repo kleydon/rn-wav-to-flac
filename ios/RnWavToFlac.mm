@@ -1,7 +1,6 @@
 #import "RnWavToFlac.h"
 
-#import "rn-wav-to-flac.h"
-#import "WavToFlacFileConverter.hpp"
+#import "../cpp/include/rn-wav-to-flac.hpp"
 
 @implementation RnWavToFlac
 RCT_EXPORT_MODULE()
@@ -13,7 +12,7 @@ RCT_EXPORT_METHOD(multiply:(nonnull NSNumber*)a withB:(nonnull NSNumber*)b
                   withResolver:(RCTPromiseResolveBlock)resolve
                   withReject:(RCTPromiseRejectBlock)reject) {
     
-    NSNumber *result = @(example::multiply([a floatValue], [b floatValue]));
+    NSNumber *result = @(WavToFlacNameSpace::multiply([a floatValue], [b floatValue]));
 
     resolve(result);
 }
@@ -32,7 +31,7 @@ RCT_EXPORT_METHOD(wavToFlac:(nonnull NSString*)inWavFilePath
     NSLog(@"     inFP: %s\n", inFilePath);
     NSLog(@"     outFP: %s\n", outFilePath);
     
-    NSNumber *result = @( WavToFlacFileConverter::convert(inFilePath, outFilePath));
+    NSNumber *result = @( WavToFlacNameSpace::wavToFlac(inFilePath, outFilePath) );
     resolve(result);
 }
 

@@ -2,7 +2,7 @@
 
 #ifdef __cplusplus
 
-#import "rn-wav-to-flac.h"
+#import "../cpp/include/rn-wav-to-flac.hpp"
 
 #endif
 

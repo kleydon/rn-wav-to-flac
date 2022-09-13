@@ -69,9 +69,9 @@
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRnWavToFlac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRnWavToFlac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2199E4E28CEA53200474EB7 /* RnWavToFlac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RnWavToFlac.h; sourceTree = "<group>"; };
+		A24297F028D13BAF00A18BFB /* rn-wav-to-flac.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "rn-wav-to-flac.hpp"; sourceTree = "<group>"; };
 		A283F82328CFECCF000BFF4B /* WavToFlacFileConverter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WavToFlacFileConverter.hpp; sourceTree = "<group>"; };
 		A283F82428CFECCF000BFF4B /* ResultCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultCode.h; sourceTree = "<group>"; };
-		A283F82528CFECCF000BFF4B /* rn-wav-to-flac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "rn-wav-to-flac.h"; sourceTree = "<group>"; };
 		A283F82728CFECCF000BFF4B /* export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = export.h; sourceTree = "<group>"; };
 		A283F82828CFECCF000BFF4B /* stream_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
 		A283F82928CFECCF000BFF4B /* all.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = all.h; sourceTree = "<group>"; };
@@ -230,7 +230,7 @@
 				A283F82628CFECCF000BFF4B /* FLAC */,
 				A283F84828CFECCF000BFF4B /* FLAC++ */,
 				A283F84F28CFECCF000BFF4B /* share */,
-				A283F82528CFECCF000BFF4B /* rn-wav-to-flac.h */,
+				A24297F028D13BAF00A18BFB /* rn-wav-to-flac.hpp */,
 				A283F82328CFECCF000BFF4B /* WavToFlacFileConverter.hpp */,
 				A283F82428CFECCF000BFF4B /* ResultCode.h */,
 				A283F84328CFECCF000BFF4B /* WavToFlacEncoder.hpp */,
