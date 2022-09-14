@@ -221,7 +221,7 @@ ResultCode WavMetadataReader::readMetadata(const char* wavFilePath,
     uint32_t numSamples = dataSize / (bytesPerSample * numChannels);
     
     uint64_t numBytesBeforeSampleData = ftell(fp);
-    printf("numBytesBeforeSampleData: %llu\n", numBytesBeforeSampleData);
+    printf("numBytesBeforeSampleData: %lu\n", numBytesBeforeSampleData);
     
     //Verify number of channels
     if (numChannels < 1 || numChannels > 2) {
