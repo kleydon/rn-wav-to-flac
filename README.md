@@ -20,6 +20,15 @@ yarn add 'rn-wav-to-flac@https://github.com/kleydon/rn-wav-to-flac'
 npx pod-install
 ```
 
+## Post-Installation
+
+[Android only]:
+
+Add the following permissions to your application's AndroidManifest.xml:
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
 
 ## Usage
 
@@ -27,8 +36,28 @@ npx pod-install
 import { wavToFlac } from "rn-wav-to-flac"
 // ...
 const resultCode = await wavToFlac(inputWavFilePath, outputFlacFilePath)
-// Result codes listed in cpp/include/ResultCode.h; OK == 0
+// Result codes listed in cpp/include/ResultCode.h; Success == 0
 ```
+
+## Limitations
+
+There are some directories this module simply won't have read/write access to. It is recommended to:
+
+1. Add a cross-platform file system management utility to your project, e.g: 
+```
+yarn add 'react-native-fs'
+```
+
+2. Use directories supplied by this file system manager, e.g:
+```
+import RNFS from 'react-native-fs'
+const cacheDirPath = RNFS.CachesDirectoryPath
+const inputWavFilePath = cacheDirPath + '/inputWavFile.wav'
+const outputFlacFilePath = cacheDirPath + '/outputFlacFile.flac'
+```
+
+While `RNFS.CacheDirectoryPath` has been tested, other paths have not; experimentation required.
+
 
 ## Contributing
 
