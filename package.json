@@ -1,7 +1,7 @@
 {
   "name": "rn-wav-to-flac",
   "version": "0.1.0",
-  "description": "test",
+  "description": "Converts .wav files to .flac files, with lossless audio compression.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -31,13 +31,24 @@
     "bootstrap": "yarn example && yarn && yarn example pods"
   },
   "keywords": [
+    "wav",
+    "flac",
+    "libFLAC",
+    "libFLAC++",
+    "audio",
+    "sound",
+    "lossless",
+    "loss-less",
+    "compression",
+    "converter",
+    "conversion",
     "react-native",
     "ios",
     "android"
   ],
   "repository": "https://github.com/kleydon/rn-wav-to-flac",
   "author": "kleydon <krispin_wav2flac@krispinleydon.net> (https://github.com/kleydon)",
-  "license": "MIT",
+  "license": "MIT, while libFLAC/libFLAC++ is permissive BSD. See LICENSE file",
   "bugs": {
     "url": "https://github.com/kleydon/rn-wav-to-flac/issues"
   },
