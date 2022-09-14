@@ -367,6 +367,8 @@ PODS:
     - React-perflogger (= 0.68.2)
   - rn-wav-to-flac (0.1.0):
     - React-Core
+  - RNDeviceInfo (10.1.2):
+    - React-Core
   - RNFS (2.20.0):
     - React-Core
   - SocketRocket (0.6.0)
@@ -433,6 +435,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-wav-to-flac (from `../..`)
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -520,6 +523,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   rn-wav-to-flac:
     :path: "../.."
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNFS:
     :path: "../node_modules/react-native-fs"
   Yoga:
@@ -572,6 +577,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: b960b687d2dfef0d3761fbb187e01812ebab8b23
   ReactCommon: 095366164a276d91ea704ce53cb03825c487a3f2
   rn-wav-to-flac: 43fff96fea2250cdc85452c8249239b2b0542197
+  RNDeviceInfo: 4a2d995e05823cf364e8791bfa450d8f2f461c42
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952

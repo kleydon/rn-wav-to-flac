@@ -29,7 +29,7 @@ bool endsWith(const char *str, const char *suffix) {
 
 
 ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
-                                       const char* outFlacFilePath) {
+                                           const char* outFlacFilePath) {
     
     printf("wavToFlac()\n");
     printf("  inWavFilePath: %s\n", inWavFilePath);
@@ -58,19 +58,20 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
     uint32_t bitsPerSample = wavMetadata.bitsPerSample;
     uint32_t bytesPerSample = wavMetadata.bitsPerSample / 8;
     uint32_t totalNumSamples = wavMetadata.numSamples; // ui32 fits WAV size limits
+    uint64_t numBytesBeforeSampleData = wavMetadata.numBytesBeforeSampleData;
     
     // Validate wav file metadata for this application
     if (numChannels < 1 || numChannels > 2) {
         fprintf(stderr,
                 "ERROR: Invalid/unsupported number of channels: %d\n",
                 numChannels);
-        return RESULT_CODE_ERR_NUM_CHANNELS;
+        return RESULT_CODE_ERR_INVALID_NUM_CHANNELS;
     }
     if (bitsPerSample != 8 && bitsPerSample != 16) {
         fprintf(stderr,
                 "ERROR: Invalid/unsupported number of bits / sample: %d\n",
                 bitsPerSample);
-        return RESULT_CODE_ERR_NUM_BITS_PER_SAMPLE;
+        return RESULT_CODE_ERR_INVALID_NUM_BITS_PER_SAMPLE;
     }
     
     // Buffers
@@ -88,25 +89,27 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
     FLAC__StreamMetadata_VorbisComment_Entry entry;
     
     // Open wav file
-    FILE *fin;
-    if ((fin = fopen(inWavFilePath, "rb")) == NULL) {
+    FILE *fin = fopen(inWavFilePath, "rb");
+    if (fin == nullptr) {
         fprintf(stderr, "ERROR: opening %s for reading\n", inWavFilePath);
-        fclose(fin);
         return RESULT_CODE_ERR_FILE_OPEN;
     }
     
     // Read wav header bytes (to advance past them)
-    if (fread(wavByteBuffer, 1, 44, fin) != 44) {
-        fprintf(stderr, "ERROR: Unable to read WAVE header\n");
-        fclose(fin);
-        return RESULT_CODE_ERR_READ_WAV_HEADER;
+    char c;
+    for (uint64_t i=0; i < numBytesBeforeSampleData; i++) {
+        if (fread(&c, 1, 1, fin) != 1) {
+            fprintf(stderr, "ERROR: Reading bytes before sample data; not enough elements read\n");
+            safeCloseFile(fin);
+            return RESULT_CODE_ERR_READ_BYTES_BEFORE_SAMPLE_DATA;
+        }
     }
     
     // Create encoder
     WavToFlacEncoder encoder(totalNumSamples);
     if (!encoder) {
         fprintf(stderr, "ERROR: allocating encoder\n");
-        fclose(fin);
+        safeCloseFile(fin);
         return RESULT_CODE_ERR_ENCODER_ALLOC;
     }
     
@@ -114,20 +117,20 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
     bool ok = encoder.set_verify(true);
     if (!ok) {
         fprintf(stderr, "ERROR: Calling encoder.set_verify()\n");
-        fclose(fin);
+        safeCloseFile(fin);
         return RESULT_CODE_ERR_ENCODER_SET_VERIFY;
     }
     const uint32_t compressionLevel = 5;
     ok = encoder.set_compression_level(compressionLevel);
     if (!ok) {
         fprintf(stderr, "ERROR: Calling encoder.set_compression_level(%d)\n", compressionLevel);
-        fclose(fin);
+        safeCloseFile(fin);
         return RESULT_CODE_ERR_ENCODER_SET_COMPRESSION_LEVEL;
     }
     ok = encoder.set_channels(numChannels);
     if (!ok) {
         fprintf(stderr, "ERROR: Calling encoder.set_channels(%d)\n", numChannels);
-        fclose(fin);
+        safeCloseFile(fin);
         return RESULT_CODE_ERR_ENCODER_SET_CHANNELS;
     }
     ok = encoder.set_bits_per_sample(bitsPerSample);
@@ -139,13 +142,13 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
     ok = encoder.set_sample_rate(sampleRate);
     if (!ok) {
         fprintf(stderr, "ERROR: Calling encoder.set_sample_rate(%d)\n", sampleRate);
-        fclose(fin);
+        safeCloseFile(fin);
         return RESULT_CODE_ERR_ENCODER_SET_SAMPLE_RATE;
     }
     ok = encoder.set_total_samples_estimate(totalNumSamples);
     if (!ok) {
         fprintf(stderr, "ERROR: Calling encoder.set_total_samples_estimate(%d)\n", totalNumSamples);
-        fclose(fin);
+        safeCloseFile(fin);
         return RESULT_CODE_ERR_ENCODER_SET_TOTAL_SAMPLES_ESTIMATE;
     }
     
@@ -161,7 +164,7 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
         !FLAC__metadata_object_vorbiscomment_append_comment(metadata[0], entry, /*copy=*/false)
     ) {
         fprintf(stderr, "ERROR: out of memory or tag error\n");
-        fclose(fin);
+        safeCloseFile(fin);
         return RESULT_CODE_ERR_OUT_OF_MEMORY_OR_TAG_ERROR;
     }
     else {
@@ -169,7 +172,7 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
         ok = encoder.set_metadata(metadata, 2);
         if (!ok) {
             fprintf(stderr, "ERROR: Calling encoder.set_metadata()\n");
-            fclose(fin);
+            safeCloseFile(fin);
             return RESULT_CODE_ERR_ENCODER_SET_METADATA;
         }
     }
@@ -178,7 +181,7 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
     initStatus = encoder.init(outFlacFilePath);
     if (initStatus != FLAC__STREAM_ENCODER_INIT_STATUS_OK) {
         fprintf(stderr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[initStatus]);
-        fclose(fin);
+        safeCloseFile(fin);
         return RESULT_CODE_ERR_ENCODER_INIT;
     }
 
@@ -190,8 +193,8 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
                 (size_t)numSamplesLeft : (size_t)wavByteBufferSizeInSamples;
         if (fread(wavByteBuffer, numChannels*bytesPerSample, numSamplesToBuffer, fin) != numSamplesToBuffer) {
             fprintf(stderr, "ERROR: reading from WAVE file\n");
-            fclose(fin);
-            return RESULT_CODE_ERR_READ_WAV_DATA;
+            safeCloseFile(fin);
+            return RESULT_CODE_ERR_READ_SAMPLE_DATA_BUFFER;
         }
         else {
             // Move the WAV buffer's samples into the FLAC PCM buffer, for libFLAC to handle.
@@ -215,15 +218,15 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
                 }
                 else { // Shouldn't arrive here
                     fprintf(stderr, "ERROR: Bad bytes per sample\n");
-                    fclose(fin);
-                    return RESULT_CODE_ERR_NUM_BITS_PER_SAMPLE;
+                    safeCloseFile(fin);
+                    return RESULT_CODE_ERR_INVALID_NUM_BITS_PER_SAMPLE;
                 }
             }
             // Feed samples to encoder
             ok = encoder.process_interleaved(pcmBuffer, (uint32_t)numSamplesToBuffer);
             if (!ok) {
                 fprintf(stderr, "ERROR: calling encoder.process_interleaved()\n");
-                fclose(fin);
+                safeCloseFile(fin);
                 return RESULT_CODE_ERR_ENCODER_PROCESS_INTERLEAVED;
             }
         }
@@ -233,7 +236,7 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
     ok = encoder.finish();
     if (!ok) {
         fprintf(stderr, "ERROR: calling encoder.finish()\n");
-        fclose(fin);
+        safeCloseFile(fin);
         return RESULT_CODE_ERR_ENCODER_FINISH;
     }
 
@@ -244,7 +247,7 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
     FLAC__metadata_object_delete(metadata[0]);
     FLAC__metadata_object_delete(metadata[1]);
 
-    fclose(fin);
+    safeCloseFile(fin);
 
     return RESULT_CODE_OK;
 }
