@@ -20,6 +20,6 @@ export function multiply(a: number, b: number): Promise<number> {
 }
 
 export function wavToFlac(inputWavFilePath: string, outputFlacFilePath: string): Promise<number> {
-  return RnWavToFlac.wavToFlac(inputWavFilePath, outputFlacFilePath)
+  return RnWavToFlac.wavToFlac(inputWavFilePath.replace('file://', ''), outputFlacFilePath)
 }
 
