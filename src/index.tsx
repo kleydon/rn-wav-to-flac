@@ -15,11 +15,26 @@ const RnWavToFlac = NativeModules.RnWavToFlac  ? NativeModules.RnWavToFlac  : ne
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return RnWavToFlac.multiply(a, b)
+export interface WavMetaData {
+  sampleRate: number,
+  numChannels: number,
+  bitsPerSample: number,  // For a single channel
+  numSamples: number,  // For a single channel
+}
+export interface GetWavMetaDataResult {
+  resultCode: number,  // If resultCode === 0, the metaData is legit
+  metaData: WavMetaData
+}
+export function getWavMetaData(inputWavFilePath:string): Promise<GetWavMetaDataResult> {
+  return RnWavToFlac.getWavMetaData(inputWavFilePath.replace('file://', '')).then(r => JSON.parse(r))
 }
 
 export function wavToFlac(inputWavFilePath: string, outputFlacFilePath: string): Promise<number> {
   return RnWavToFlac.wavToFlac(inputWavFilePath.replace('file://', ''), outputFlacFilePath)
 }
 
+
+// Example function
+export function multiply(a: number, b: number): Promise<number> {
+  return RnWavToFlac.multiply(a, b)
+}

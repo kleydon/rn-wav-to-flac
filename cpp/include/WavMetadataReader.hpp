@@ -19,6 +19,7 @@ struct WavMetadata {
 
 class WavMetadataReader {
     public:
+        static bool fileNameEndsWith(const char *str, const char *suffix);
         ResultCode readMetadata(const char* wavFilePath,
                                 WavMetadata* wavMetadata);
 };
