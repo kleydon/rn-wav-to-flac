@@ -9,16 +9,19 @@ import {
   Platform,
   Alert
 } from 'react-native'
-import { 
-  multiply, 
-  wavToFlac 
+import {
+  WavMetaData,
+  GetWavMetaDataResult,
+  getWavMetaData,
+  wavToFlac,
+  multiply,
 } from 'rn-wav-to-flac'
 
 const ilog = console.log
 const elog = console.log
 
 // NOTE! Must keep this in sync with /cpp/ResultCode.h
-const wavToFlacResultCodes = [  
+const resultCodes = [  
   //Ok code
   'RESULT_CODE_OK',
   //Error codes
@@ -78,12 +81,23 @@ export default function App() {
   ilog('inWavFilePath: ' + inWavFilePath)
   ilog('outFlacFilePath: ' + outFlacFilePath)
 
+  const [wavMetaDataResult, setWavMetaDataResult] = React.useState<GetWavMetaDataResult | undefined>();
   const [conversionResult, setConversionResult] = React.useState<number | undefined>();
   const [multiplyResult, setMultiplyResult] = React.useState<number | undefined>();
 
   const isAndroid = Platform.OS === 'android';
 
-  const doWavToFlac = ():void => {
+  const doGetWavMetaData = async ():Promise<void> => {
+    getWavMetaData(inWavFilePath).then((res:GetWavMetaDataResult) => {
+      // If res.resultCode === 0, metadata values can be trusted
+      setWavMetaDataResult(res)
+    }).catch((e:any) => {
+      elog(e)
+      Alert.alert('Error', 'wavToFlac() erred with: ' + e)
+    })
+  }
+
+  const doWavToFlac = async ():Promise<void> => {
     wavToFlac(inWavFilePath, outFlacFilePath).then(setConversionResult).catch((e:any) => {
       elog(e)
       Alert.alert('Error', 'wavToFlac() erred with: ' + e)
@@ -117,8 +131,11 @@ export default function App() {
 
   const multiplyButtonTitle = `multiply ${a} * ${b}`
 
+  const wavMetaDataResultCode = (wavMetaDataResult !== undefined) ? 
+      `(${resultCodes[wavMetaDataResult.resultCode]})` : ''
+
   const wavToFlacResultCode = (conversionResult !== undefined) ? 
-      `(${wavToFlacResultCodes[conversionResult]})` : ''
+      `(${resultCodes[conversionResult]})` : ''
 
   ilog(`Audio File Paths (${Platform.OS}):`)
   ilog('inWavFilePath: ' + inWavFilePath)
@@ -126,7 +143,7 @@ export default function App() {
 
   return (
     <>
-      <View style={{height: 35}}/>
+      <View style={{height: 50}}/>
       <Text style={ss.title}>rn-wav-to-flac</Text>
       <View style={ss.container}>
         <Text style={ss.convertPromptText}>{prompt}</Text>
@@ -135,16 +152,25 @@ export default function App() {
         <Text style={ss.label}>Output .flac file path:</Text>
         <Text style={ss.path}>{outFlacFilePath}{'\n'}</Text>
         <View style={{height:10}} />
+        
         <Button title='convert' onPress={doWavToFlac}></Button>
         <Text style={ss.label}>result:</Text>
         <Text style={ss.result}>{String(conversionResult)} {wavToFlacResultCode}</Text>
-        <View style={{height:50}} />
+        <View style={{height:30}} />
+
+        <Button title='getWavMetaData' onPress={doGetWavMetaData}></Button>
+        <Text style={ss.label}>result:</Text>
+        <Text style={ss.result}>{String(wavMetaDataResult?.resultCode)} {wavMetaDataResultCode}</Text>
+        <Text style={ss.result}>{JSON.stringify(wavMetaDataResult?.wavMetaData)}</Text>
+        <View style={{height:30}} />
+
         <Text style={ss.multiplyPromptText}>A native "multiply" test:</Text>
         <Button title={multiplyButtonTitle} onPress={doMultiply}></Button>
         <Text style={ss.label}>
           result:{' '} 
           <Text style={ss.result}>{String(multiplyResult)}
           </Text>
+        
         </Text>
       </View>
     </>

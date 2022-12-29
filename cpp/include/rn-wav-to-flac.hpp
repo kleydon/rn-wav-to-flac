@@ -3,10 +3,14 @@
 
 namespace WavToFlacNameSpace {
 
-  double multiply(double a, double b);
+  void getWavMetaData(const char* inputWavFilePath,
+                      char* wavMetaDataJsonStrBuff,
+                      unsigned int wavMetaDataJsonStrBuffSize);
 
   int wavToFlac(const char* inputWavFilePath, const char* outputFlacFilePath);
 
+  // Example method
+  double multiply(double a, double b);
 }
 
 #endif  // __EXAMPLE_H__

@@ -17,9 +17,29 @@ void safeCloseFile(FILE* fp) {
 }
 
 
+bool WavMetadataReader::fileNameEndsWith(const char *str, const char *suffix) {
+    if (!str || !suffix) {
+        return false;
+    }
+    size_t strLen = strlen(str);
+    size_t suffixLen = strlen(suffix);
+    if (suffixLen > strLen) {
+        return false;
+    }
+    return strncmp(str + strLen - suffixLen, suffix, suffixLen) == 0;
+}
+
+
 ResultCode WavMetadataReader::readMetadata(const char* wavFilePath,
                                            WavMetadata* wavMetadata) {
     
+    
+    // Validate file name
+    if (WavMetadataReader::fileNameEndsWith(wavFilePath, ".wav") == false) {
+        fprintf(stderr, "ERROR: No/invalid suffix for wav file: %s\n", wavFilePath);
+        return RESULT_CODE_ERR_WAV_FILE_SUFFIX;
+    }
+
     // Open file
     FILE* fp = fopen(wavFilePath, "rb");
     if (fp == nullptr) {
@@ -221,7 +241,7 @@ ResultCode WavMetadataReader::readMetadata(const char* wavFilePath,
     uint32_t numSamples = dataSize / (bytesPerSample * numChannels);
     
     uint64_t numBytesBeforeSampleData = ftell(fp);
-    printf("numBytesBeforeSampleData: %lu\n", numBytesBeforeSampleData);
+    //printf("numBytesBeforeSampleData: %lu\n", numBytesBeforeSampleData);
     
     //Verify number of channels
     if (numChannels < 1 || numChannels > 2) {

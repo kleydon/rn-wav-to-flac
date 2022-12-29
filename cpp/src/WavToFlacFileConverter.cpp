@@ -15,16 +15,8 @@
 #include "ResultCode.h"
 
 
-bool endsWith(const char *str, const char *suffix) {
-    if (!str || !suffix) {
-        return false;
-    }
-    size_t strLen = strlen(str);
-    size_t suffixLen = strlen(suffix);
-    if (suffixLen > strLen) {
-        return false;
-    }
-    return strncmp(str + strLen - suffixLen, suffix, suffixLen) == 0;
+bool fileNameEndsWith(const char *str, const char *suffix) {
+    return WavMetadataReader::fileNameEndsWith(str, suffix);
 }
 
 
@@ -36,11 +28,11 @@ ResultCode WavToFlacFileConverter::convert(const char* inWavFilePath,
     printf("  outFlacFilePath: %s\n\n", outFlacFilePath);
     
     // Validate file names
-    if (endsWith(inWavFilePath, ".wav") == false) {
+    if (fileNameEndsWith(inWavFilePath, ".wav") == false) {
         fprintf(stderr, "ERROR: No/invalid suffix for wav file: %s\n", inWavFilePath);
         return RESULT_CODE_ERR_WAV_FILE_SUFFIX;
     }
-    if (endsWith(outFlacFilePath, ".flac") == false) {
+    if (fileNameEndsWith(outFlacFilePath, ".flac") == false) {
         fprintf(stderr, "ERROR: No/invalid suffix for flac file: %s\n", outFlacFilePath);
         return RESULT_CODE_ERR_FLAC_FILE_SUFFIX;
     }
