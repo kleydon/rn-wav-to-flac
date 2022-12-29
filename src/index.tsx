@@ -26,7 +26,7 @@ export interface GetWavMetaDataResult {
   metaData: WavMetaData
 }
 export function getWavMetaData(inputWavFilePath:string): Promise<GetWavMetaDataResult> {
-  return RnWavToFlac.getWavMetaData(inputWavFilePath.replace('file://', '')).then(r => JSON.parse(r))
+  return RnWavToFlac.getWavMetaData(inputWavFilePath.replace('file://', '')).then((r:string) => JSON.parse(r))
 }
 
 export function wavToFlac(inputWavFilePath: string, outputFlacFilePath: string): Promise<number> {
