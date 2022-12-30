@@ -48,7 +48,7 @@
   ],
   "repository": "https://github.com/kleydon/rn-wav-to-flac",
   "author": "kleydon <krispin_wav2flac@krispinleydon.net> (https://github.com/kleydon)",
-  "license": "This lib is MIT-licensed. This lib is underpinned by libFLAC/libFLAC++, which are permissively BSD-licenced. See LICENSE file.",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/kleydon/rn-wav-to-flac/issues"
   },
