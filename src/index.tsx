@@ -23,7 +23,7 @@ export interface WavMetaData {
 }
 export interface GetWavMetaDataResult {
   resultCode: number,  // If resultCode === 0, the metaData is legit
-  metaData: WavMetaData
+  wavMetaData: WavMetaData
 }
 export function getWavMetaData(inputWavFilePath:string): Promise<GetWavMetaDataResult> {
   return RnWavToFlac.getWavMetaData(inputWavFilePath.replace('file://', '')).then((r:string) => JSON.parse(r))
