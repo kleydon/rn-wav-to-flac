@@ -1,7 +1,10 @@
 
 rn-wav-to-flac:
 
-    Copyright (c) 2022-Present - Krispin Leydon, all rights reserved.
+    Copyright (c) 2022-Present - Krispin Leydon
+    
+    This library is MIT-licensed, but is underpinned by libFLAC/libFLAC++ 
+    which are permissively BSD-licenced; see below.
 
 libFLAC/libFLAC++:
 
