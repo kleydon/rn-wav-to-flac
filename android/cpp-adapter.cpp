@@ -4,15 +4,23 @@
 
 extern "C" {
 
-  JNIEXPORT jdouble JNICALL
-  Java_com_rnwavtoflac_RnWavToFlacModule_nativeMultiply(JNIEnv *env, jclass type, 
-                                                        jdouble a, jdouble b) {
+  JNIEXPORT jstring JNICALL
+  Java_com_rnwavtoflac_RnWavToFlacModule_nativeGetWavMetaData(JNIEnv *env, jclass type,
+                                                              jstring inputWavFilePath) {
 
-      printf("Java_com_rnwavtoflac_RnWavToFlacModule_nativeMultiplyA()\n");
+      printf("Java_com_rnwavtoflac_RnWavToFlacModule_getWavMetaData()\n");
 
-      return WavToFlacNameSpace::multiply(a, b);
+      // Convert from jstring -> const char*
+      const char *inWavFilePathStr = env->GetStringUTFChars(inputWavFilePath, 0);
+      printf("  inWavFilePathStr: %s\n", inWavFilePathStr);
+
+      const unsigned int buffSize = 512;
+      char buff[buffSize];
+      WavToFlacNameSpace::getWavMetaData(inWavFilePathStr, buff, buffSize);
+
+      jstring result = env->NewStringUTF(buff); 
+      return result;
   }
-
 
   JNIEXPORT jint JNICALL
   Java_com_rnwavtoflac_RnWavToFlacModule_nativeWavToFlac(JNIEnv *env, jclass type,
@@ -30,6 +38,14 @@ extern "C" {
       return WavToFlacNameSpace::wavToFlac(inWavFilePathStr, outFlacFilePathStr);
   }
 
+  JNIEXPORT jdouble JNICALL
+  Java_com_rnwavtoflac_RnWavToFlacModule_nativeMultiply(JNIEnv *env, jclass type, 
+                                                        jdouble a, jdouble b) {
+
+      printf("Java_com_rnwavtoflac_RnWavToFlacModule_nativeMultiplyA()\n");
+
+      return WavToFlacNameSpace::multiply(a, b);
+  }
 }
 
 
