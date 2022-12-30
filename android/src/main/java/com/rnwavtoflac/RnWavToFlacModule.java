@@ -39,18 +39,24 @@ public class RnWavToFlacModule extends ReactContextBaseJavaModule {
 
     // Native method signatures underpinning react methods; see cpp-adapter.cpp for definitions
 
-    public static native double nativeMultiply(double a, double b);
+    public static native String nativeGetWavMetaData(String inputWavFilePath);
     public static native int nativeWavToFlac(String inputWavFilePath, String outputFlacFilePath);
+    public static native double nativeMultiply(double a, double b);
     
     // React methods
 
     @ReactMethod
-    public void multiply(double a, double b, Promise promise) {
-        promise.resolve(nativeMultiply(a, b));
+    public void getWavMetaData(String inputWavFilePath, Promise promise) {
+        promise.resolve(nativeGetWavMetaData(inputWavFilePath));
     }
 
     @ReactMethod
     public void wavToFlac(String inputWavFilePath, String outputFlacFilePath, Promise promise) {
         promise.resolve(nativeWavToFlac(inputWavFilePath, outputFlacFilePath));
+    }
+
+    @ReactMethod
+    public void multiply(double a, double b, Promise promise) {
+        promise.resolve(nativeMultiply(a, b));
     }
 }
