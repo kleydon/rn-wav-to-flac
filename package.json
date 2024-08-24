@@ -1,6 +1,6 @@
 {
   "name": "rn-wav-to-flac",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Permissively-licensed lossless audio compression for react-native; converts .wav files to .flac files. Pairs well with kleydon's rn-audio lib for recording and playback.",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",

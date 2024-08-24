@@ -1497,7 +1497,7 @@ PODS:
     - React-logger (= 0.75.1)
     - React-perflogger (= 0.75.1)
     - React-utils (= 0.75.1)
-  - rn-wav-to-flac (0.1.0):
+  - rn-wav-to-flac (0.2.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1793,7 +1793,7 @@ SPEC CHECKSUMS:
   React-utils: 0ae17a2fe87b43a939826410d2fcbb28d44f1bfc
   ReactCodegen: e9156d86a166f3e10dc8fb6160764048df3528bc
   ReactCommon: 3ae48fa4cfa7052a270c2150ececfc94e541fb8a
-  rn-wav-to-flac: e04a5c3caf8bb5668d06af98b4c2b21776efb19b
+  rn-wav-to-flac: 8f9424fb563062d8b4db57da82c2f338934492ad
   RNDeviceInfo: b899ce37a403a4dea52b7cb85e16e49c04a5b88e
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
@@ -1801,4 +1801,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 968c94d3980bdfd5d5cd0135dba8cfd9590c66a6
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
