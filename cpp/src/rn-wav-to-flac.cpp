@@ -2,8 +2,7 @@
 #include "WavMetadataReader.hpp"
 #include "WavToFlacFileConverter.hpp"
 
-
-namespace WavToFlacNameSpace {
+namespace rnwavtoflac {
 
   void getWavMetaData(const char* inputWavFilePath,
                       char* wavMetaDataJsonStrBuff,
@@ -49,4 +48,5 @@ namespace WavToFlacNameSpace {
   double multiply(double a, double b) {
 		return a * b;
 	}
+  
 }

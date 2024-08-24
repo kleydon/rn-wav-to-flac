@@ -6,6 +6,7 @@
 RCT_EXPORT_MODULE()
 
 
+
 RCT_EXPORT_METHOD(getWavMetaData:(nonnull NSString*)inWavFilePath
                   withResolver:(RCTPromiseResolveBlock)resolve
                   withReject:(RCTPromiseRejectBlock)reject) {
@@ -19,7 +20,7 @@ RCT_EXPORT_METHOD(getWavMetaData:(nonnull NSString*)inWavFilePath
   
     const unsigned int buffSize = 512;
     char buff[buffSize];
-    WavToFlacNameSpace::getWavMetaData(inFilePath, buff, buffSize);
+    rnwavtoflac::getWavMetaData(inFilePath, buff, buffSize);
 
     NSString *resultStr = [NSString stringWithUTF8String:buff];
 
@@ -40,21 +41,22 @@ RCT_EXPORT_METHOD(wavToFlac:(nonnull NSString*)inWavFilePath
     // NSLog(@"     inFP: %s\n", inFilePath);
     // NSLog(@"     outFP: %s\n", outFilePath);
     
-    NSNumber *result = @( WavToFlacNameSpace::wavToFlac(inFilePath, outFilePath) );
+    NSNumber *result = @( rnwavtoflac::wavToFlac(inFilePath, outFilePath) );
     resolve(result);
 }
 
 
-// Example method for C++
-// See the implementation of the example module in the `cpp` folder
-RCT_EXPORT_METHOD(multiply:(nonnull NSNumber*)a withB:(nonnull NSNumber*)b
-                  withResolver:(RCTPromiseResolveBlock)resolve
-                  withReject:(RCTPromiseRejectBlock)reject) {
-    
-    NSNumber *result = @(WavToFlacNameSpace::multiply([a floatValue], [b floatValue]));
+// Example method
+// See // https://reactnative.dev/docs/native-modules-ios
+RCT_EXPORT_METHOD(multiply:(double)a
+                  b:(double)b
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject) {
+    NSNumber *result = @(rnwavtoflac::multiply(a, b));
 
     resolve(result);
 }
+
 
 
 @end

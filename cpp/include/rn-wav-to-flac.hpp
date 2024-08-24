@@ -1,7 +1,7 @@
 #ifndef __EXAMPLE_H__
 #define __EXAMPLE_H__
 
-namespace WavToFlacNameSpace {
+namespace rnwavtoflac {
 
   void getWavMetaData(const char* inputWavFilePath,
                       char* wavMetaDataJsonStrBuff,
@@ -11,6 +11,7 @@ namespace WavToFlacNameSpace {
 
   // Example method
   double multiply(double a, double b);
+  
 }
 
 #endif  // __EXAMPLE_H__
