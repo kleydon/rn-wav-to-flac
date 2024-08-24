@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.4.1)
+project(RnWavToFlac)
 
 set (CMAKE_VERBOSE_MAKEFILE ON)
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 14)
 
-# Library name: "WavToFlac" - be sure to keep RnWavToFlacModule.java in sync.
-add_library(WavToFlac SHARED
+add_library(rn-wav-to-flac            SHARED
             ../cpp/src/libFLAC/include/private/all.h
             ../cpp/src/libFLAC/include/private/bitmath.h
             ../cpp/src/libFLAC/include/private/bitreader.h
@@ -78,7 +78,7 @@ add_library(WavToFlac SHARED
             cpp-adapter.cpp
 )
 
-# Specifies paths to native header files.
+# Specifies paths to native header files
 include_directories(
             ../cpp/include
             ../cpp/include/FLAC

@@ -187,9 +187,9 @@ In cpp/share/grabbag/cuesheet.c, added the following modification:
 
 ### 5. Fold libFLAC/libFLAC++ into a React-Native Library
 
-Create the skeleton rn lib via `npx create-react-native-library rn-wav-to-flac`, choosing Native Module > C++ for Android & iOS > Vanilla. Test on iOS/android.
+Create the skeleton rn lib via `npx create-react-native-library rn-wav-to-flac`, choosing Native Module > C++ for Android & iOS > Vanilla. Test on iOS/android. (There's an example of working with Kotlin here: // See: https://medium.com/@mregnauld/how-to-run-c-code-from-a-native-android-or-ios-app-265cad775ed5).
 
-Change ios bundle identifier to `com.quixotry.rnwavtoflac`
+Change ios bundle identifier to `com.rnwavtoflac`
 
 Place libFLAC/libFLAC++ src and includes (and my wavToFlac conversion code) in the "cpp" dir that was created with the RN lib.
 

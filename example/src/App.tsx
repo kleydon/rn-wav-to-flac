@@ -9,9 +9,11 @@ import {
   Platform,
   Alert
 } from 'react-native'
-import {
-  WavMetaData,
+import type {
   GetWavMetaDataResult,
+  WavMetaData,
+} from 'rn-wav-to-flac'
+import {
   getWavMetaData,
   wavToFlac,
   multiply,
