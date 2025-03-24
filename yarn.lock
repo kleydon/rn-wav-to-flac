@@ -10835,6 +10835,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-clean-project@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "react-native-clean-project@npm:4.0.3"
+  bin:
+    react-native-clean-project: source/index.js
+  checksum: 10c0/9cc551c289f179dd68c0abd57d54fdbfc3cb6b6d0e9693fe4c0d6d7fc17a0ed1dfa007ada3d3a65e1eeab7fb042d714602046a07f1e2735ebae2f381def61980
+  languageName: node
+  linkType: hard
+
 "react-native-device-info@npm:^11.1.0":
   version: 11.1.0
   resolution: "react-native-device-info@npm:11.1.0"
@@ -11435,6 +11444,7 @@ __metadata:
     react: "npm:18.3.1"
     react-native: "npm:0.75.1"
     react-native-builder-bob: "npm:^0.30.0"
+    react-native-clean-project: "npm:^4.0.3"
     react-native-device-info: "npm:^11.1.0"
     react-native-fs: "npm:^2.20.0"
   languageName: unknown
